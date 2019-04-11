@@ -24,7 +24,7 @@ const LinkedList = require('./sortinglinkedlist');
 
 //1. Understanding merge sort
 
-//1a. 
+//1a.
 //[16, 49, 39, 27, 43, 34, 46, 40]
 
 //1b.
@@ -50,18 +50,27 @@ const LinkedList = require('./sortinglinkedlist');
 // Using 14 as pivot:
 //[14,	13,	10,	3,	9,	12,	15,	16,	19,	17]
 
-
-const data = [89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5];
+const data = [
+  89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 
+  55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 
+  45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 
+  98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 
+  85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 
+  82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 
+  38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 
+  73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 
+  42, 51, 54, 84, 34, 53, 78, 40, 14, 5
+];
 
 function mergeSort(array) {
   if (array.length <= 1) {
     return array;
   }
-  
+
   const middle = Math.floor(array.length / 2);
   let left = array.slice(0, middle);
   let right = array.slice(middle, array.length);
-  
+
   left = mergeSort(left);
   right = mergeSort(right);
   return merge(left, right, array);
@@ -74,16 +83,15 @@ function merge(left, right, array) {
   while (leftIndex < left.length && rightIndex < right.length) {
     if (left[leftIndex] < right[rightIndex]) {
       array[outputIndex++] = left[leftIndex++];
-    }
-    else {
+    } else {
       array[outputIndex++] = right[rightIndex++];
     }
   }
-  
+
   for (let i = leftIndex; i < left.length; i++) {
     array[outputIndex++] = left[i];
   }
-  
+
   for (let i = rightIndex; i < right.length; i++) {
     array[outputIndex++] = right[i];
   }
@@ -115,29 +123,27 @@ function partition(array, start, end) {
       j++;
     }
   }
-  swap(array, end-1, j);
+  swap(array, end - 1, j);
   return j;
 }
 
-
-function qSort (array, start = 0, end = array.length) {
-  if(start >= end){
+function qSort(array, start = 0, end = array.length) {
+  if (start >= end) {
     return array;
   }
-  
+
   const middle = partition(array, start, end);
   array = qSort(array, start, middle);
   array = qSort(array, middle + 1, end);
   return array;
-
 }
 
-function mSort (array) {
-  if (array.length <= 1){
+function mSort(array) {
+  if (array.length <= 1) {
     return array;
   }
 
-  const middle = Math.floor(array.length/2);
+  const middle = Math.floor(array.length / 2);
   let left = array.slice(0, middle);
   let right = array.slice(middle, array.length);
 
@@ -145,8 +151,6 @@ function mSort (array) {
   right = mSort(right);
 
   return merge(left, right, array);
-
-
 }
 
 // console.log(qSort(data));
@@ -166,45 +170,66 @@ function main() {
 }
 
 function linkedMerge(ll) {
-  let sortedArray = [];   
+  let sortedArray = [];
   let left = ll.head;
   let right = ll.next;
 
   console.log(ll.head.next.value);
-  
-  while (ll.head.next !== null) {
-    sortedArray.push(ll.head.next.value);   
-    ll.remove(ll.head.next.value);
-  } 
-  
-  sortedArray.push(ll.head.value);
-  
-  console.log(mSort(sortedArray));
 
-  
-      
-      
-    
+  while (ll.head.next !== null) {
+    sortedArray.push(ll.head.next.value);
+    ll.remove(ll.head.next.value);
+  }
+
+  sortedArray.push(ll.head.value);
+
+  console.log(mSort(sortedArray));
 }
 
-//  Bucket Sort
+main();
 
+//  Bucket Sort
 const newData = [5, 13, 1, 9, 11, 7, 3];
 
 function bucketSort(arr, low) {
   let newArr = [];
-    
-  for(let i = 0; i <arr.length; i++){
-    newArr[arr[i]-low] = (arr[i]);
+
+  for (let i = 0; i < arr.length; i++) {
+    newArr[arr[i] - low] = arr[i];
   }
   console.log(newArr);
 }
-    
-    
-    
-    
-  
+//bucketSort(newData, 1);
 
+function inPlace(arr) {
+  let random1 = Math.floor(Math.random() * arr.length);
+  let random2 = Math.floor(Math.random() * arr.length);
 
+  for (let i = 0; i < arr.length - 1; i++) {
+    swap(arr, random1, random2);
+    console.log(arr);
+    return arr;
+  }
+  return arr;
+}
 
-main();
+inPlace(newData);
+
+function inOrder(arr) {
+
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const middle = Math.floor(arr.length / 2);
+  let left = arr.slice(0, middle);
+  let right = arr.slice(middle, arr.length);
+
+  left = inOrder(left);
+  right = inOrder(right);
+  return merge(left, right, arr);
+}
+
+const books = ['The Great Gatsby', 'Catch-22', 'Lolita', 'Beloved'];
+
+console.log(inOrder(books));
